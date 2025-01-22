@@ -54,6 +54,9 @@ if ingredients_list:
         # smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
         
         # As a workaround I have used fruityvice.com as my data provider.
+
+        st.subheader(fruit_chosen + ' Nutrition Information')
+                
         smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
         sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width = True)
     

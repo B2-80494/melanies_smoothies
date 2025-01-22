@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col, when_matched
+import requests
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
@@ -46,7 +47,17 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
-    # st.write(ingredients_string)
+        # New section to display smoothiefront nutrition information
+        
+        # This is the original line of code which the workshop is asking me to use.
+        # It seems that this API provider's website as not available.
+        # smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        
+        # As a workaround I have used fruityvice.com as my data provider.
+        smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+        sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width = True)
+    
+        # st.write(ingredients_string)
 
 
     my_insert_stmt = """ 
@@ -65,9 +76,4 @@ if ingredients_list:
         st.success('Your Smoothie is ordered, ' + name_on_order + '!', icon="✅")
 
 
-# New section to display smoothiefront nutrition information
-import requests
-smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-# st.text(smoothiefroot_response.json())
 
-sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width = True)
